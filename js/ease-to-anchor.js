@@ -1,12 +1,13 @@
 ;(function(window, document, undefined){
   'use strict';
 
-  var EaseToAnchor = function(_element, _easing, _duration){
+  var EaseToAnchor = function(_element, _easing, _duration, _offsetTop){
     var easeToAnchorNavigationComplete = new CustomEvent('easeToAnchorNavigationComplete'),
     el = _element,
     options = window.easeToOptions || {},
     easeStyle = _easing || 'linear',
     duration = _duration || 1000,
+    offsetTop = _offsetTop || 0,
     windowBox = {
       height: window.innerHeight,
       width: window.innerWidth
@@ -113,7 +114,9 @@
     };
     options[el.id] = options[el.id] || {};
     easeStyle = _easing || options[el.id].easeStyle || options.easeStyle || 'linear';
-    duration = _duration || options[el.id].duration || options.duration || 1000;
+    duration = +_duration || +options[el.id].duration || +options.duration || 1000;
+    offsetTop = +_offsetTop || +options[el.id].offsetTop || +options.offsetTop || 0;
+    distanceY = distanceY + offsetTop; 
     return animate;
   };
 
